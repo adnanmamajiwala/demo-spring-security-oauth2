@@ -1,0 +1,18 @@
+[
+  {
+    "username": "admin",
+    "password": "nimda",
+    "firstName": "Super",
+    "lastName": "Admin",
+    "deleted": false,
+    "role": "ADMIN"
+  },
+  {
+    "username": "testuser",
+    "password": "test123",
+    "firstName": "Test",
+    "lastName": "User",
+    "deleted": false,
+    "role": "MEMBER"
+  }
+]

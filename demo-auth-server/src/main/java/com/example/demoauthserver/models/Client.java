@@ -29,7 +29,7 @@ public class Client implements ClientDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private String id;
+    private Long id;
 
     private String clientId;
     private String clientSecret;

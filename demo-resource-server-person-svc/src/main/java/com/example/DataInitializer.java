@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
+import java.io.InputStream;
 import java.util.Arrays;
 
 @Configuration
@@ -17,17 +18,11 @@ public class DataInitializer {
 
     @Bean
     public CommandLineRunner run(PersonRepository repository) {
-        return args -> {
-            if (repository.count() == 0) {
-                log.debug("No records found. Now inserting from data.json");
-                repository.saveAll(Arrays.asList(getPeople()));
-            } else {
-                log.debug("Records are found.");
-            }
-        };
+        return args -> repository.saveAll(Arrays.asList(getPeople()));
     }
 
     private Person[] getPeople() throws Exception {
-        return new ObjectMapper().readValue(new ClassPathResource("data.json").getInputStream(), Person[].class);
+        InputStream inputStream = new ClassPathResource("data.json").getInputStream();
+        return new ObjectMapper().readValue(inputStream, Person[].class);
     }
 }

@@ -1,0 +1,46 @@
+[
+  {
+    "clientId": "employee-client",
+    "clientSecret": "secret",
+    "scopes": [
+      "openid"
+    ],
+    "grantTypes": [
+      "refresh_token",
+      "client_credentials"
+    ],
+    "accessTokenValiditySeconds": 900,
+    "refreshTokenValiditySeconds": 1800
+  },
+  {
+    "clientId": "ng-client",
+    "clientSecret": "secret",
+    "scopes": [
+      "openid"
+    ],
+    "grantTypes": [
+      "refresh_token",
+      "authorization_code"
+    ],
+    "registeredRedirectUri": [
+      "http://localhost:4200/authorized"
+    ],
+    "accessTokenValiditySeconds": 900,
+    "refreshTokenValiditySeconds": 1800
+  },
+  {
+    "clientId": "test-client",
+    "clientSecret": "secret",
+    "scopes": [
+      "openid"
+    ],
+    "grantTypes": [
+      "authorization_code"
+    ],
+    "registeredRedirectUri": [
+      "http://localhost:8080/authorized"
+    ],
+    "accessTokenValiditySeconds": 15,
+    "refreshTokenValiditySeconds": 30
+  }
+]
