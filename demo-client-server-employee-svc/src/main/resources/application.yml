@@ -1,0 +1,27 @@
+service:
+  address:
+    base-url: http://localhost:8090
+  person:
+    base-url: http://localhost:8070
+
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://127.0.0.1:9000/.well-known/jwks.json
+      client:
+        registration:
+          employee-client-oidc:
+            provider: spring
+            client-id: employee-client
+            client-secret: secret
+            authorization-grant-type: client_credentials
+            scope: openid
+            client-name: employee-client-oidc
+        provider:
+          spring:
+            token-uri: http://127.0.0.1:9000/oauth/token
+            jwk-set-uri: http://127.0.0.1:9000/.well-known/jwks.json
+

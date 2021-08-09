@@ -1,0 +1,19 @@
+server:
+  port: 9000
+
+spring:
+  jpa:
+    properties:
+      hibernate.hbm2ddl.import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+  h2:
+    console:
+      enabled: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
+    com:
+      example:
+        demoauthserver: debug

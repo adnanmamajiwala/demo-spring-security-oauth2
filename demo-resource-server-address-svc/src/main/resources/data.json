@@ -1,0 +1,30 @@
+[
+  {
+    "street": "100 SuperNova Rd",
+    "state": "Marvel City",
+    "zipCode": "12345",
+    "country": "US",
+    "personId": "4"
+  },
+  {
+    "street": "3700 Hyper Ln",
+    "state": "Wonder City",
+    "zipCode": "78945",
+    "country": "US",
+    "personId": "3"
+  },
+  {
+    "street": "777 Cool City",
+    "state": "Star City",
+    "zipCode": "11245",
+    "country": "US",
+    "personId": "2"
+  },
+  {
+    "street": "5 Super Rd",
+    "state": "Gotham City",
+    "zipCode": "27401",
+    "country": "US",
+    "personId": "1"
+  }
+]
