@@ -1,1 +1,20 @@
-<p>employee works!</p>
+<div class="p-5 mb-4 bg-light rounded-3">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let employee of employees; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        {{ employee.firstName + ' ' + employee.lastName }}
+      </td>
+      <td>{{ employee.address.street + ' ' + employee.address.state + ' ' + employee.address.country + ' ' + employee.address.zipCode}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
