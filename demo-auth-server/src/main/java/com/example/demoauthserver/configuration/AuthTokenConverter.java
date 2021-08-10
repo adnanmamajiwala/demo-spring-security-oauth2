@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
 
@@ -23,7 +24,10 @@ public class AuthTokenConverter extends DefaultUserAuthenticationConverter {
     @Override
     public Map<String, ?> convertUserAuthentication(Authentication authentication) {
         Map<String, Object> response = new LinkedHashMap<>();
+        User user = (User) authentication.getPrincipal();
         response.put("sub", authentication.getName());
+        response.put("firstName", user.getFirstName());
+        response.put("lastName", user.getLastName());
         mapAuthorities(authentication, response);
         return response;
     }

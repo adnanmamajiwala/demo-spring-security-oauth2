@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../auth/auth.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {User} from '../auth/auth.model';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +11,18 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() {
+  isAuthenticated$: Observable<boolean>;
+  user: User;
+  constructor(private authService: AuthService,
+              private jwtHelper: JwtHelperService) {
   }
 
   ngOnInit(): void {
+    this.isAuthenticated$ = this.authService.isAuthenticated$;
+    this.user = this.jwtHelper.decodeToken<User>();
   }
 
+  login() {
+    this.authService.login();
+  }
 }
