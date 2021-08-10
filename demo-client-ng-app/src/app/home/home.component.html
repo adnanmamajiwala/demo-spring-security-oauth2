@@ -3,7 +3,8 @@
     <h1 class="display-9 fw-bold mb-3">Demo App</h1>
     <p class="col-md-10 fs-5">This is a demo application to show the authentication and authorization using
       OAuthServer built in spring-boot.</p>
-    <p class="col-md-10 fs-5">Click on the <strong>Login</strong> button to sign-in using the `authorization_code` flow
+    <p class="col-md-10 fs-5">Click on the <strong>Login</strong> button to sign-in using the
+      <span class="bg-warning p-1">authorization_code</span> flow
       in the OAuth2 spec.
     </p>
     <button class="btn btn-primary btn-lg " (click)="login()">Login</button>
@@ -14,5 +15,7 @@
     <p class="col-md-10 fs-5">You can now navigate to employees page. </p>
     <p class="col-md-10 fs-5">Employees page will display a list of all the employees in the database. To retrieve this
       data a valid access token / jwt is required by the backend.</p>
+    <p class="col-md-10 fs-5">The <strong>Add</strong> button on the employees page will be visible only to users with
+      <span class="bg-warning p-1">ADMIN_ROLE</span>.</p>
   </div>
 </div>
