@@ -19,15 +19,13 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams
-      .pipe(
-        mergeMap((value: Params) => this.authService.retrieveToken(value.code))
-      )
-      .toPromise()
-      .catch((err) => {
-        console.log(err);
-        this.toastr.error('Uh-oh something went wrong while authenticating. Please try again', 'Error');
-      })
-      .finally(() => this.router.navigate(['/']));
+      .pipe(mergeMap((value: Params) => this.authService.retrieveToken(value.code)))
+      .subscribe(() => this.router.navigate(['/']),
+        error => {
+          console.log(error);
+          this.toastr.error('Uh-oh something went wrong while authenticating. Please try again', 'Error');
+          this.router.navigate(['/']);
+        });
 
   }
 }
