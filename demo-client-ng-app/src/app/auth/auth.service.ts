@@ -16,28 +16,13 @@ export class AuthService {
   private readonly redirectUri = 'http://localhost:4200/authorized';
   private readonly baseAuthUri = 'http://localhost:9000/oauth';
   private helper: JwtHelperService = new JwtHelperService();
-  private authJwt: AuthJwt = null;
+  private _authJwt: AuthJwt = null;
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private http: HttpClient,
+  constructor(private httpClient: HttpClient,
               private router: Router) {
-    const data = localStorage.getItem('jwt-token');
-    if (!!data) {
-      this.authJwt = JSON.parse(data);
-    }
-    interval(15000)
-      .subscribe(() => {
-        const val = this.isAuthenticated();
-        if (!val) {
-          localStorage.removeItem('jwt-token');
-        }
-        this.isAuthenticatedSubject.next(val);
-      });
-  }
-
-  private isAuthenticated(): boolean {
-    return !!this.authJwt && !this.helper.isTokenExpired(this.authJwt.access_token);
+    this.init();
   }
 
   retrieveToken(code: string): Promise<AuthJwt> {
@@ -51,11 +36,11 @@ export class AuthService {
       'Authorization': `Basic ${btoa(`${this.clientId}:${this.clientSecret}`)}`,
     });
 
-    return this.http.post<AuthJwt>(`${this.baseAuthUri}/token`, params.toString(), {headers: headers})
+    return this.httpClient.post<AuthJwt>(`${this.baseAuthUri}/token`, params.toString(), {headers: headers})
       .pipe(
         map(jwt => {
           localStorage.setItem('jwt-token', JSON.stringify(jwt));
-          this.authJwt = jwt;
+          this._authJwt = jwt;
           this.isAuthenticatedSubject.next(true);
           return jwt;
         }),
@@ -68,9 +53,26 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('jwt-token');
-    this.authJwt = null;
+    this._authJwt = null;
     this.isAuthenticatedSubject.next(false);
     this.router.navigate(['/']).then();
+  }
+
+  private init() {
+    const data = localStorage.getItem('jwt-token');
+    if (!!data) {
+      this._authJwt = JSON.parse(data);
+    }
+    this.isAuthenticatedSubject.next(this.isAuthenticated());
+    interval(15000).subscribe(() => {
+      const val = this.isAuthenticated();
+      if (!val) this.logout();
+      this.isAuthenticatedSubject.next(val);
+    });
+  }
+
+  private isAuthenticated() {
+    return !!this._authJwt && !this.helper.isTokenExpired(this._authJwt.access_token);
   }
 }
 

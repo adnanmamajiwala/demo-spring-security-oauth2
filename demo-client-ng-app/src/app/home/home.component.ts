@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAuthenticated$ = this.authService.isAuthenticated$;
-    this.user = this.jwtHelper.decodeToken<User>();
+    this.user = new User(this.jwtHelper.decodeToken<User>());
   }
 
   login() {

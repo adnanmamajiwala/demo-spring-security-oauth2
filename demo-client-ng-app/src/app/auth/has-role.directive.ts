@@ -3,11 +3,11 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {User} from './auth.model';
 
 @Directive({
-  selector: '[appUserRole]',
+  selector: '[appHasRole]'
 })
-export class UserRoleDirective implements OnInit {
+export class HasRoleDirective implements OnInit {
 
-  userRoles: string[];
+  requiredRoles: string[];
 
   constructor(private templateRef: TemplateRef<any>,
               private jwtHelperService: JwtHelperService,
@@ -15,25 +15,31 @@ export class UserRoleDirective implements OnInit {
   }
 
   @Input()
-  set appUserRole(roles: string[]) {
+  set appHasRole(roles: string[]) {
     if (!roles || !roles.length) {
       throw new Error('Roles value is empty or missed');
     }
-    this.userRoles = roles;
+    this.requiredRoles = roles;
   }
 
   ngOnInit(): void {
-    let hasAccess = false;
-    const user = this.jwtHelperService.decodeToken<User>();
-    if (!!user) {
-      hasAccess = this.userRoles.some(r => user.authorities.has(r));
-    }
-
-    if (hasAccess) {
+    if (this.hasRoles()) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
       this.viewContainer.clear();
     }
+  }
+
+  private hasRoles(): boolean {
+    let hasAccess: boolean = false;
+    const user = new User(this.jwtHelperService.decodeToken());
+    if (!!user) {
+      hasAccess = true;
+      for (const role of this.requiredRoles) {
+        if (!user.authorities.has(role)) return false;
+      }
+    }
+    return hasAccess;
   }
 
 }

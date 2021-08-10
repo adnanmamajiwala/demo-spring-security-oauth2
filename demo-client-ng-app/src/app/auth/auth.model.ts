@@ -10,7 +10,15 @@ export class AuthJwt {
 export class User {
   firstName: string;
   lastName: string;
-  sub: string;
+  username: string;
   authorities: Set<string>;
   scope: Set<string>;
+
+  constructor(object: any = null) {
+    this.firstName = object?.firstName;
+    this.lastName = object?.lastName;
+    this.username = object?.sub;
+    this.authorities = new Set<string>(object?.authorities);
+    this.scope = new Set<string>(object?.scope);
+  }
 }

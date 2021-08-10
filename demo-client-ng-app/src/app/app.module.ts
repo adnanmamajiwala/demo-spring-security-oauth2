@@ -13,7 +13,7 @@ import {JwtModule} from '@auth0/angular-jwt';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthJwt} from './auth/auth.model';
-import {UserRoleDirective} from './auth/user-role.directive';
+import {HasRoleDirective} from './auth/has-role.directive';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import {UserRoleDirective} from './auth/user-role.directive';
     HomeComponent,
     EmployeeComponent,
     AuthComponent,
-    UserRoleDirective,
+    HasRoleDirective,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +37,7 @@ import {UserRoleDirective} from './auth/user-role.directive';
           const data = localStorage.getItem('jwt-token');
           return !!data ? (JSON.parse(data) as AuthJwt).access_token : null;
         },
+        allowedDomains: ['localhost:8080']
       },
     }),
   ],

@@ -1,6 +1,9 @@
 <div class="p-5 mb-4 bg-light rounded-3">
-  <table class="table table-striped">
-    <thead>
+  <div class="text-end mb-3">
+    <button class="btn btn-success me-2" *appHasRole="['ROLE_ADMIN']" (click)="add()">Add</button>
+  </div>
+  <table class="table table-striped table-hover">
+    <thead class="table-dark">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
@@ -8,7 +11,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let employee of employees; index as i">
+    <tr *ngFor="let employee of employees; index as i" style="background-color: white">
       <th scope="row">{{ i + 1 }}</th>
       <td>
         {{ employee.firstName + ' ' + employee.lastName }}

@@ -21,7 +21,7 @@ export class AuthComponent implements OnInit {
       const code = window.location.href.substring(indexOf + 5);
       this.authService.retrieveToken(code)
         .catch((err) => {
-          console.log(err)
+          console.log(err);
           this.toastr.error('Uh-oh something went wrong while authenticating. Please try again', 'Error');
         })
         .finally(() => this.router.navigate(['/']));
