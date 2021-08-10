@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {AuthJwt} from './auth.model';
 import {Router} from '@angular/router';
-import {BehaviorSubject, interval} from 'rxjs';
+import {BehaviorSubject, interval, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class AuthService {
     this.init();
   }
 
-  retrieveToken(code: string): Promise<AuthJwt> {
+  retrieveToken(code: string): Observable<AuthJwt> {
     let params = new URLSearchParams();
     params.append('grant_type', 'authorization_code');
     params.append('redirect_uri', this.redirectUri);
@@ -44,7 +44,7 @@ export class AuthService {
           this.isAuthenticatedSubject.next(true);
           return jwt;
         }),
-      ).toPromise();
+      );
   }
 
   login() {
